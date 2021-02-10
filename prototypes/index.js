@@ -40,49 +40,35 @@ const kittyPrompts = {
 
   sortByAge() {
     // Sort the kitties by their age
+    let kitties2 = kitties
+    const result = kitties2.sort((a, b) => b.age - a.age);
 
-    const result = kitties.map(kitty => )
     return result;
 
     // Annotation:
     // Write your annotation here as a comment
     //start with an array of objects
     //want to return the same array of objects, but sorted by age (oldest to youngest)
+    //sort(b-a) is decending
   },
 
   growUp() {
     // Return an array of kitties who have all grown up by 2 years e.g.
-    // [{
-    //   name: 'Felicia',
-    //   age: 4,
-    //   color: 'grey'
-    // },
-    // {
-    //   name: 'Tiger',
-    //   age: 7,
-    //   color: 'orange'
-    // },
-    // ...etc]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    let result = kitties.sort((a, b) => b.age - a.age);
+    result.forEach(kitty => kitty.age += 2)
+
     return result;
   }
 };
 
 
 
-
-
-
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
-
-
-
-
 
 
 // DATASET: clubs from ./datasets/clubs
