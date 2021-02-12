@@ -62,14 +62,11 @@ const kittyPrompts = {
   }
 };
 
-
-
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
-
 
 // DATASET: clubs from ./datasets/clubs
 const clubPrompts = {
@@ -107,20 +104,11 @@ const clubPrompts = {
   }
 };
 
-
-
-
-
-
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
-
-
-
-
 
 
 // DATASET: mods from ./datasets/mods
@@ -135,7 +123,15 @@ const modPrompts = {
     //   { mod: 4, studentsPerInstructor: 8 }
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = mods.reduce((answer, currentVal) => {
+      let modObject = {mod: 0, studentsPerInstructor: 0};
+      modObject.mod = currentVal.mod;
+      modObject.studentsPerInstructor = (currentVal.students / currentVal.instructors)
+      answer.push(modObject)
+      return answer
+
+    }, [])
+    console.log(result)
     return result;
 
     // Annotation:
