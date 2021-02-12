@@ -81,12 +81,29 @@ const clubPrompts = {
     //   Pam: ['Drama', 'Art', 'Chess'],
     //   ...etc
     // }
+    let names = [];
+    clubs.forEach(club => {
+      club.members.forEach(member => names.push(member));
+    });
+    const filteredNames = names.filter((a, b) => names.indexOf(a) === b);
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = filteredNames.reduce((finalObject, currentVal) => {
+      let activeClubs = [];
+      clubs.forEach(clubObject => {
+        if (clubObject.members.includes(currentVal)) {
+          activeClubs.push(clubObject.club)
+        }
+      })
+      finalObject[currentVal] = activeClubs;
+      return finalObject;
+    }, {})
+
     return result;
 
     // Annotation:
     // Write your annotation here as a comment
+    //take in array of objects with club as key and and name as key(array of values)
+    //
   }
 };
 
