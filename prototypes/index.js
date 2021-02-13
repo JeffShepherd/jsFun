@@ -140,19 +140,11 @@ const modPrompts = {
 };
 
 
-
-
-
-
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
-
-
-
-
 
 
 // DATASET: cakes from ./datasets/cakes
@@ -166,11 +158,17 @@ const cakePrompts = {
     //    ..etc
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = cakes.reduce((finalObject, currentCake) => {
+      finalObject.push({flavor: currentCake.cakeFlavor, inStock: currentCake.inStock})
+      return finalObject
+    }, [])
     return result;
 
     // Annotation:
     // Write your annotation here as a comment
+    //take in array of cake objects
+    //iterate through and create objects with flavor and stock
+    //return array of flavor/stock cake objects
   },
 
   onlyInStock() {
@@ -194,22 +192,29 @@ const cakePrompts = {
     // ..etc
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = cakes.filter(cake => cake.inStock !== 0)
     return result;
 
     // Annotation:
     // Write your annotation here as a comment
+    //take in array of cake objects
+    //return array of cake objects where inStock is greater than zero
   },
 
   totalInventory() {
     // Return the total amount of cakes in stock e.g.
     // 59
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = cakes.reduce((cakeNumber, currentVal) => {
+      return cakeNumber += currentVal.inStock
+    }, 0)
     return result;
 
     // Annotation:
     // Write your annotation here as a comment
+    //take in array of cake objects
+    //iterate through object and add inStock amount to an accumulator
+    //return total amount of cakes in stock (number)
   },
 
   allToppings() {
@@ -217,11 +222,22 @@ const cakePrompts = {
     // every cake in the dataset e.g.
     // ['dutch process cocoa', 'toasted sugar', 'smoked sea salt', 'berries', ..etc]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = cakes.reduce((uniqueIngredients, cake) => {
+      cake.toppings.forEach(topping => {
+        if (!uniqueIngredients.includes(topping)) {
+          uniqueIngredients.push(topping)
+        } 
+      })
+      return uniqueIngredients;
+    }, [])
     return result;
 
     // Annotation:
     // Write your annotation here as a comment
+    //take in array of cake objects
+    //iterate through cakes and add each topping to an array
+    //for each topping, check it doesn't exist already in the accumulator array
+    //return array of unique toppings
   },
 
   groceryList() {
@@ -234,28 +250,37 @@ const cakePrompts = {
     //    'berries': 2,
     //    ...etc
     // }
-
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const toppings = this.allToppings();
+    // console.log(toppings)//this data is good
+    const result = toppings.reduce((currentTopping, currentVal) => {
+      let counter = 0;
+      cakes.forEach(cake => {
+        if (cake.toppings.includes(currentTopping)) {
+          counter ++;
+        }
+      })
+      currentVal[currentTopping] = counter;
+      console.log(currentVal)
+      return currentVal
+    }, {}) 
     return result;
 
     // Annotation:
     // Write your annotation here as a comment
+    //take in an array of recipe objects
+    //call previous method to get an array of unique ingredients
+    //use reduce to iterate through the ingredient array
+    //push a key value (use .includes and increase a counter if the array has that ingredient)
+    //return an object with unique ingredients as keys, and the amount of times that ingredient appears as the amount
   }
 };
 
 
-
-
-
-
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
-
-
-
 
 
 
