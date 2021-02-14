@@ -27,7 +27,7 @@ const kittyPrompts = {
 
     // Return an array of just the names of kitties who are orange e.g.
     // ['Tiger', 'Snickers']
-    const orange = kitties.filter(kitty => kitty.color === 'orange')
+    const orange = kitties.filter(kitty => kitty.color === 'orange');
     const result = orange.map(kitty => {
       return kitty.name;
      });
@@ -40,7 +40,7 @@ const kittyPrompts = {
 
   sortByAge() {
     // Sort the kitties by their age
-    let kitties2 = kitties
+    let kitties2 = kitties;
     const result = kitties2.sort((a, b) => b.age - a.age);
 
     return result;
@@ -56,7 +56,7 @@ const kittyPrompts = {
     // Return an array of kitties who have all grown up by 2 years e.g.
 
     let result = kitties.sort((a, b) => b.age - a.age);
-    result.forEach(kitty => kitty.age += 2)
+    result.forEach(kitty => kitty.age += 2);
 
     return result;
   }
@@ -88,7 +88,7 @@ const clubPrompts = {
       let activeClubs = [];
       clubs.forEach(clubObject => {
         if (clubObject.members.includes(currentVal)) {
-          activeClubs.push(clubObject.club)
+          activeClubs.push(clubObject.club);
         }
       })
       finalObject[currentVal] = activeClubs;
@@ -126,12 +126,11 @@ const modPrompts = {
     const result = mods.reduce((answer, currentVal) => {
       let modObject = {mod: 0, studentsPerInstructor: 0};
       modObject.mod = currentVal.mod;
-      modObject.studentsPerInstructor = (currentVal.students / currentVal.instructors)
-      answer.push(modObject)
-      return answer
+      modObject.studentsPerInstructor = (currentVal.students / currentVal.instructors);
+      answer.push(modObject);
+      return answer;
 
     }, [])
-    console.log(result)
     return result;
 
     // Annotation:
@@ -159,8 +158,8 @@ const cakePrompts = {
     // ]
 
     const result = cakes.reduce((finalObject, currentCake) => {
-      finalObject.push({flavor: currentCake.cakeFlavor, inStock: currentCake.inStock})
-      return finalObject
+      finalObject.push({flavor: currentCake.cakeFlavor, inStock: currentCake.inStock});
+      return finalObject;
     }, [])
     return result;
 
@@ -192,7 +191,7 @@ const cakePrompts = {
     // ..etc
     // ]
 
-    const result = cakes.filter(cake => cake.inStock !== 0)
+    const result = cakes.filter(cake => cake.inStock !== 0);
     return result;
 
     // Annotation:
@@ -206,7 +205,7 @@ const cakePrompts = {
     // 59
 
     const result = cakes.reduce((cakeNumber, currentVal) => {
-      return cakeNumber += currentVal.inStock
+      return cakeNumber += currentVal.inStock;
     }, 0)
     return result;
 
@@ -225,7 +224,7 @@ const cakePrompts = {
     const result = cakes.reduce((uniqueIngredients, cake) => {
       cake.toppings.forEach(topping => {
         if (!uniqueIngredients.includes(topping)) {
-          uniqueIngredients.push(topping)
+          uniqueIngredients.push(topping);
         } 
       })
       return uniqueIngredients;
@@ -251,17 +250,16 @@ const cakePrompts = {
     //    ...etc
     // }
     const toppings = this.allToppings();
-    // console.log(toppings)//this data is good
-    const result = toppings.reduce((currentTopping, currentVal) => {
+
+    const result = toppings.reduce((list, currentTopping) => {
       let counter = 0;
       cakes.forEach(cake => {
         if (cake.toppings.includes(currentTopping)) {
           counter ++;
         }
       })
-      currentVal[currentTopping] = counter;
-      console.log(currentVal)
-      return currentVal
+      list[currentTopping] = counter;
+      return list;
     }, {}) 
     return result;
 
@@ -295,11 +293,14 @@ const classPrompts = {
     //   { roomLetter: 'G', program: 'FE', capacity: 29 }
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = classrooms.filter(classroom => classroom.program === 'FE');
     return result;
 
     // Annotation:
     // Write your annotation here as a comment
+    //data is an array of classroom objects
+    //iterate through and return if program is FE
+    //return array of just FE objects
   },
 
   totalCapacities() {
@@ -310,21 +311,34 @@ const classPrompts = {
     //   beCapacity: 96
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = classrooms.reduce((accumulator, currentVal) => {
+      if (currentVal.program === 'FE') {
+        accumulator.feCapacity += currentVal.capacity;
+      } else {
+        accumulator.beCapacity += currentVal.capacity;
+      }
+      return accumulator;
+    }, {feCapacity: 0, beCapacity: 0})
     return result;
 
     // Annotation:
     // Write your annotation here as a comment
+    //data is an array of classroom objects
+    //iterate through and add capacity to corresponding key
+    //return obhject with key/value pairs of FE/BE and total capacity for each
   },
 
   sortByCapacity() {
     // Return the array of classrooms sorted by their capacity (least capacity to greatest)
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = classrooms.sort((a, b) => a.capacity - b.capacity);
     return result;
 
     // Annotation:
     // Write your annotation here as a comment
+    //data is an array of classroom objects
+    //sort classroom objects by capacity in ascending order
+    //return sorted array of objects of same length
   }
 };
 
@@ -346,12 +360,15 @@ const bookPrompts = {
     //   'The Curious Incident of the Dog in the Night - Time', 'The Bell Jar',
     //   'Catch-22', 'Treasure Island']
 
-
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const cleanBooks = books.filter(book => book.genre !== 'Horror' && book.genre !== 'True Crime');
+    const result = cleanBooks.map(book => book.title);
     return result;
 
     // Annotation:
     // Write your annotation here as a comment
+    //data is an array of book objects
+    //iterate through and array and push non-horror and non-truecrime book title to new array
+    //return array of book titles
 
   },
   getNewBooks() {
@@ -361,12 +378,20 @@ const bookPrompts = {
     // [{ title: 'Harry Potter and the Sorcerer\'s Stone', year: 1997 },
     //  { title: 'Life of Pi', year: 2001 },
     //  { title: 'The Curious Incident of the Dog in the Night-Time', year: 2003 }]
+    const laterBooks = books.filter(book => book.published > 1989);
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = laterBooks.reduce((accumulator, currentVal) => {
+      accumulator.push({title: currentVal.title, year: currentVal.published});
+      return accumulator;
+    }, [])
     return result;
 
     // Annotation:
     // Write your annotation here as a comment
+    //data is an array of book objects
+    //get array of books published after 1989
+    //create new array of objects (using this array^) reflecting title and year
+    //return array of objects reflecting title and year
   }
 
 };
