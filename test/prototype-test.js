@@ -307,7 +307,7 @@ describe("PROTOTYPES", () => {
   });
 
   describe("Weather prompts", () => {
-    it.only("getAverageTemps", () => {
+    it("getAverageTemps", () => {
       const e = weatherPrompts.getAverageTemps();
 
       expect(e).to.deep.equal([
@@ -375,7 +375,7 @@ describe("PROTOTYPES", () => {
   });
 
   describe("Brewery Prompts", () => {
-    it("getBeerCount", () => {
+    it.only("getBeerCount", () => {
       const e = breweryPrompts.getBeerCount();
 
       expect(e).to.deep.equal(40)

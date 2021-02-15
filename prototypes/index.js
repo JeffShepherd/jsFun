@@ -410,11 +410,14 @@ const weatherPrompts = {
     // return an array of all the average temperatures. Eg:
     // [ 40, 40, 44.5, 43.5, 57, 35, 65.5, 62, 14, 46.5 ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = weather.map(city => (city.temperature.high + city.temperature.low) / 2)
     return result;
 
     // Annotation:
     // Write your annotation here as a comment
+    //data is an array of weather objects
+    //iterate through objects and create avg temp of each (sum high + low then divide by 2)
+    //return array of average temps
   },
 
   findSunnySpots() {
@@ -423,12 +426,20 @@ const weatherPrompts = {
     // [ 'Atlanta, Georgia is sunny.',
     // 'New Orleans, Louisiana is sunny.',
     // 'Raleigh, North Carolina is mostly sunny.' ]
+    const niceLocales = weather.filter(city => city.type === 'sunny' || city.type === 'mostly sunny');
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = niceLocales.reduce((accum, currentVal) => {
+      accum.push(`${currentVal.location} is ${currentVal.type}.`)
+      return accum;
+    }, []);
     return result;
 
     // Annotation:
     // Write your annotation here as a comment
+    //data is an array of weather objects
+    //create array of weather objects with type sunny or mostly sunny
+    //iterate through new array and push interpolated sentences to new array
+    //return array of sentences
   },
 
   findHighestHumidity() {
@@ -440,11 +451,14 @@ const weatherPrompts = {
     //   temperature: { high: 49, low: 38 }
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    const result = weather.sort((a, b) => b.humidity - a.humidity);
+    return result[0];
 
     // Annotation:
     // Write your annotation here as a comment
+    //data is an array of weather objects
+    //sort array in descending order by humidty
+    //return first element of array
 
   }
 };
@@ -466,12 +480,22 @@ const nationalParksPrompts = {
     //   parksToVisit: ["Yellowstone", "Glacier", "Everglades"],
     //   parksVisited: ["Rocky Mountain", "Acadia", "Zion"]
     //}
+    const result = nationalParks.reduce((accumulator, currentVal) => {
+      if (currentVal.visited === true) {
+        accumulator.parksVisited.push(currentVal.name)
+      } else {
+        accumulator.parksToVisit.push(currentVal.name)
+      }
+      return accumulator;
+    }, {parksToVisit: [], parksVisited: []})
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
     return result;
 
     // Annotation:
     // Write your annotation here as a comment
+    //data is an array of park objects
+    //create arrays of parks visited and parks to visit
+    //return object with each array assigned to key
   },
 
   getParkInEachState() {
@@ -484,11 +508,19 @@ const nationalParksPrompts = {
     // { Florida: 'Everglades' } ]
 
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = nationalParks.reduce((accumulator, currentVal) => {
+      const newObject = {}
+      newObject[currentVal.location] = currentVal.name
+      accumulator.push(newObject)
+      return accumulator;
+    }, [])
     return result;
 
     // Annotation:
     // Write your annotation here as a comment
+    //data is an array of park objects
+    //iterate through array using reduce to create objects and add to accumulator array
+    //return array of object reflecting state name and park names in that state
   },
 
   getParkActivities() {
@@ -507,11 +539,21 @@ const nationalParksPrompts = {
     //   'backpacking',
     //   'rock climbing' ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = nationalParks.reduce((accumulator, currentVal) => {
+      currentVal.activities.forEach( activity => {
+        if (!accumulator.includes(activity)) {
+          accumulator.push(activity)
+        }
+      })
+      return accumulator;
+    }, [])
     return result;
 
     // Annotation:
     // Write your annotation here as a comment
+    //data is an array of park objects
+    //iterate through and for each array of activities, push unique activities to array
+    //return array of unique activities
   }
 };
 
