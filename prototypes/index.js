@@ -576,11 +576,17 @@ const breweryPrompts = {
     // Return the total beer count of all beers for every brewery e.g.
     // 40
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = breweries.reduce((accumulator, currentVal) => {
+      return accumulator += currentVal.beers.length;
+    }, 0)
     return result;
 
     // Annotation:
     // Write your annotation here as a comment
+    //data is an array of brewery objects
+    //iterate through and add length of array in beers property to an accumulator
+    //return accumulated number
+
   },
 
   getBreweryBeerCount() {
@@ -592,51 +598,53 @@ const breweryPrompts = {
     // ...etc.
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = breweries.reduce((accumulator, currentVal) => {
+      const abrvBrewery = {name: currentVal.name, beerCount: currentVal.beers.length}
+      accumulator.push(abrvBrewery)
+      return accumulator
+    }, [])
     return result;
 
     // Annotation:
     // Write your annotation here as a comment
+    //data is an array of brewery objects
+    //iterate through and add new objects (including name and beercount) to an accumulator
+    //return accumulator
   },
 
   findHighestAbvBeer() {
     // Return the beer which has the highest ABV of all beers
     // e.g.
     // { name: 'Barrel Aged Nature\'s Sweater', type: 'Barley Wine', abv: 10.9, ibu: 40 }
-
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    const allBeers = breweries.reduce((accumulator, currentVal) => {
+      currentVal.beers.forEach(beer => accumulator.push(beer))
+      return accumulator
+    }, [])
+    
+    const result = allBeers.sort((a, b) => b.abv - a.abv)
+    return result[0];
 
     // Annotation:
     // Write your annotation here as a comment
+    //data is an array of brewery objects
+    //iterate through and add all beer objects to an array
+    //sort array in decending order by abv
+    //return the first index value of the new array
   }
 };
 
 
-
-
-
-
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 
-
-
-
-
-
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
-
-
-
-
 
 
 // DOUBLE DATASETS
